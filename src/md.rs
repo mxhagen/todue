@@ -136,6 +136,23 @@ impl Markdown for Document {
     fn from_md(md: String) -> anyhow::Result<Self> {
         let mut document = Document::default();
         for line in md.lines() {
+            if document.title.is_none() {
+                let mut chars = line.chars().peekable();
+                let mut count = 0;
+                while chars.peek().is_some_and(|c| c.is_ascii_whitespace()) {
+                    chars.next();
+                };
+                while chars.peek().is_some_and(|&c| c == '#') {
+                    count += 1;
+                    chars.next();
+                };
+                while chars.peek().is_some_and(|c| c.is_ascii_whitespace()) {
+                    chars.next();
+                };
+                if count == 1 {
+                    document.title = Some(chars.collect());
+                }
+            }
             if let Ok(entry) = Entry::from_md(line.to_string()) {
                 document.entries.push(entry);
             }
@@ -143,3 +160,4 @@ impl Markdown for Document {
         Ok(document)
     }
 }
+
