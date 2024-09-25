@@ -1,71 +1,67 @@
 # Example TODO List
-- [ ] ((2024-06-20 21:00)) Take out the trash
-- [x] ((2024-06-20 16:00)) Get groceries
-- [ ] ((2024-06-20 20:00)) Do the dishes
-- [x] This is an extremely long todo entry without a date and yet it has already been completed. there is no way it will all fit in one line, right? i sure hope that doesn't cause any trouble for the end user.
-- [ ] didnt
-- [ ] you
-- [ ] know
-- [ ] you
-- [ ] were
-- [ ] freaky
-- [ ] like
-- [ ] that
-- [ ] can
-- [ ] i
-- [ ] pay
-- [ ] with
-- [ ] mousepay
-- [ ] here
-- [ ] man
-- [ ] tiktok
-- [ ] is
-- [ ] actually
-- [ ] hilarious
-- [ ] though
-- [ ] there
-- [ ] is
-- [ ] also
-- [ ] some
-- [ ] baddies
-- [ ] with
-- [ ] fat
-- [ ] honkers
-- [ ] on
-- [ ] there
-- [ ] that
-- [ ] have
-- [ ] nice
-- [ ] smiles
-- [ ] and
-- [ ] sometimes
-- [ ] personalities
-- [ ] oh
-- [ ] yeeah
-- [ ] baby
-- [ ] they
-- [ ] are
-- [ ] real
-- [ ] hot
-- [ ] babes
-- [ ] i
-- [ ] hope
-- [ ] to
-- [ ] see
-- [ ] such
-- [ ] nice
-- [ ] melons
-- [ ] in
-- [ ] person
-- [ ] one
-- [ ] day
-- [ ] but
-- [ ] for
-- [ ] that
-- [ ] i
-- [ ] would
-- [ ] probably
-- [ ] need
-- [ ] to
-- [ ] go
-- [ ] outside
+
+- [ ] (2024-06-20 21:00) Take out the trash
+- [x] (2024-06-20 16:00) Get groceries
+- [ ] (2024-06-20 20:00) Do the dishes
+- [x]                    This is an extremely long TODO entry without a date and yet it has already been completed. there is no way it will all fit in one line, right? i sure hope that doesn't cause any trouble for the end user of the application.
+- [ ]                    More TODOs
+- [ ]                    There's a lot to do
+- [ ]                    Man still going
+- [ ]                    Almost never ending TODOs
+- [ ]                    I sure hope scrolling through them works properly
+- [ ]                    Maybe this is just to test that out
+- [ ]                    Or maybe it isn't who knows
+- [ ]                    Nah im joking it is
+- [ ]                    Did
+- [ ]                    you
+- [ ]                    know
+- [ ]                    a
+- [ ]                    pengiun
+- [ ]                    named
+- [ ]                    nils
+- [ ]                    olav
+- [ ]                    III
+- [ ]                    achieved
+- [ ]                    knighthood
+- [ ]                    in
+- [ ]                    2008
+- [ ]                    in
+- [ ]                    edinburgh
+- [ ]                    zoo
+- [ ]                    That's
+- [ ]                    crazy
+- [ ]                    is
+- [ ]                    it
+- [ ]                    not?
+- [ ]                    I
+- [ ]                    couldn't
+- [ ]                    believe
+- [ ]                    it
+- [ ]                    at
+- [ ]                    first
+- [ ]                    either
+- [ ]                    but
+- [ ]                    I
+- [ ]                    do
+- [ ]                    think
+- [ ]                    it
+- [ ]                    is
+- [x]                    awesome
+- [ ]                    that
+- [ ]                    a
+- [x]                    pengiun
+- [ ]                    gets
+- [ ]                    such
+- [ ]                    recognition
+- [ ]                    I
+- [ ]                    think
+- [ ]                    he
+- [ ]                    deserves
+- [ ]                    it
+- [x]                    and
+- [ ]                    he
+- [ ]                    also
+- [ ]                    deserves
+- [ ]                    a
+- [x]                    fish
+- [x]                    Anyway this is the last TODO entry and should be accessible, if you are reading this: congratulations

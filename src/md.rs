@@ -30,8 +30,13 @@ pub trait Markdown {
 impl Markdown for Entry {
     fn to_md(&self) -> String {
         let mut md = format!("- [{}] ", if self.done { "x" } else { " " });
-        if let Some(deadline) = self.deadline {
-            md += &format!("({}) ", deadline.format("(%Y-%m-%d %H:%M)"));
+        match self.deadline {
+            Some(deadline) => md += &format!("{} ", deadline.format("(%Y-%m-%d %H:%M)")),
+            None => {
+                md += &std::iter::repeat(' ')
+                    .take("(YYYY-mm-dd HH:MM) ".len())
+                    .collect::<String>()
+            }
         }
         md += &self.text;
         md
@@ -141,14 +146,14 @@ impl Markdown for Document {
                 let mut count = 0;
                 while chars.peek().is_some_and(|c| c.is_ascii_whitespace()) {
                     chars.next();
-                };
+                }
                 while chars.peek().is_some_and(|&c| c == '#') {
                     count += 1;
                     chars.next();
-                };
+                }
                 while chars.peek().is_some_and(|c| c.is_ascii_whitespace()) {
                     chars.next();
-                };
+                }
                 if count == 1 {
                     document.title = Some(chars.collect());
                 }
@@ -160,4 +165,3 @@ impl Markdown for Document {
         Ok(document)
     }
 }
-
