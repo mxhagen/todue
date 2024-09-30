@@ -32,11 +32,7 @@ impl Markdown for Entry {
         let mut md = format!("- [{}] ", if self.done { "x" } else { " " });
         match self.deadline {
             Some(deadline) => md += &format!("{} ", deadline.format("(%Y-%m-%d %H:%M)")),
-            None => {
-                md += &std::iter::repeat(' ')
-                    .take("(YYYY-mm-dd HH:MM) ".len())
-                    .collect::<String>()
-            }
+            None => md += &str::repeat(" ", "(YYYY-mm-dd HH:MM) ".len()),
         }
         md += &self.text;
         md
