@@ -17,6 +17,7 @@ use crossterm::{
 };
 
 /// state of the user interface
+#[derive(Debug)]
 pub struct Ui<T>
 where
     T: io::Write,
@@ -35,7 +36,7 @@ where
     pub height: usize,
     pub active_entry_idx: usize,
     pub current_scroll_offset: usize,
-    queue_sort_update: bool
+    queue_sort_update: bool,
 }
 
 impl<T> Ui<T>
@@ -59,7 +60,7 @@ where
             inactive_color_pair,
             inactive_done_color_pair,
             header_color_pair,
-            current_sort_mode: Default,
+            current_sort_mode: SortMode::Default,
             active_entry_idx: 0,
             scrolloff: 8,
             current_scroll_offset: 0,
@@ -95,6 +96,7 @@ where
             RestorePosition,
             cursor::Show
         )?;
+        writeln!(self.ostream)?;
         Ok(())
     }
 
@@ -209,11 +211,15 @@ where
     /// update the index of the first *shown* entry using `self.scrolloff`
     pub fn update_scroll_offset(&mut self) {
         if self.current_scroll_offset + self.scrolloff >= self.active_entry_idx {
-            let diff = (self.current_scroll_offset + self.scrolloff).abs_diff(self.active_entry_idx);
+            let diff =
+                (self.current_scroll_offset + self.scrolloff).abs_diff(self.active_entry_idx);
             self.current_scroll_offset = self.current_scroll_offset.saturating_sub(diff);
-
-        } else if (self.current_scroll_offset + self.inner_height()).saturating_sub(self.scrolloff) <= self.active_entry_idx {
-            let diff = (self.current_scroll_offset + self.inner_height()).saturating_sub(self.scrolloff).abs_diff(self.active_entry_idx);
+        } else if (self.current_scroll_offset + self.inner_height()).saturating_sub(self.scrolloff)
+            <= self.active_entry_idx
+        {
+            let diff = (self.current_scroll_offset + self.inner_height())
+                .saturating_sub(self.scrolloff)
+                .abs_diff(self.active_entry_idx);
             self.current_scroll_offset = (self.current_scroll_offset + diff).min(
                 self.document
                     .entries
@@ -269,11 +275,11 @@ where
 
     pub fn cycle_sort_mode(&mut self) {
         self.current_sort_mode = match self.current_sort_mode {
-            Default => ByDeadlineDescending,
-            ByDeadlineDescending => ByDeadlineAscending,
-            ByDeadlineAscending => ByTextAscending,
-            ByTextAscending => ByTextDescending,
-            ByTextDescending => Default,
+            SortMode::Default => SortMode::ByDeadlineDescending,
+            SortMode::ByDeadlineDescending => SortMode::ByDeadlineAscending,
+            SortMode::ByDeadlineAscending => SortMode::ByTextAscending,
+            SortMode::ByTextAscending => SortMode::ByTextDescending,
+            SortMode::ByTextDescending => SortMode::Default,
         };
         self.queue_sort_update = true;
     }
@@ -281,17 +287,24 @@ where
     pub fn apply_sort_mode(&mut self) {
         if self.queue_sort_update {
             match self.current_sort_mode {
-                Default => self.document = self.original_document.clone(),
-                ByDeadlineDescending => {
+                SortMode::Default => self.document = self.original_document.clone(),
+                SortMode::ByDeadlineDescending => {
                     self.document.entries.sort_by_key(|entry| entry.deadline);
                     self.document.entries.reverse();
-                },
-                ByDeadlineAscending => self.document.entries.sort_by_key(|entry| entry.deadline),
-                ByTextAscending => self.document.entries.sort_by_key(|entry| entry.text.to_lowercase()),
-                ByTextDescending => {
-                    self.document.entries.sort_by_key(|entry| entry.text.to_lowercase());
+                }
+                SortMode::ByDeadlineAscending => {
+                    self.document.entries.sort_by_key(|entry| entry.deadline)
+                }
+                SortMode::ByTextAscending => self
+                    .document
+                    .entries
+                    .sort_by_key(|entry| entry.text.to_lowercase()),
+                SortMode::ByTextDescending => {
+                    self.document
+                        .entries
+                        .sort_by_key(|entry| entry.text.to_lowercase());
                     self.document.entries.reverse();
-                },
+                }
             }
             self.queue_sort_update = false;
         }
@@ -303,17 +316,27 @@ where
     }
 }
 
+impl<T> Default for Ui<T>
+where
+    T: Default + io::Write,
+{
+    fn default() -> Self {
+        Self::init(T::default(), Document::default())
+    }
+}
+
 pub enum MoveDirection {
     Down,
     Up,
 }
 pub use MoveDirection::*;
 
+#[derive(Debug, Default)]
 pub enum SortMode {
+    #[default]
     Default,
     ByDeadlineDescending,
     ByDeadlineAscending,
     ByTextAscending,
     ByTextDescending,
 }
-pub use SortMode::*;
